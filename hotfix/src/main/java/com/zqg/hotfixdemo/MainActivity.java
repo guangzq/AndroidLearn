@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 import dalvik.system.BaseDexClassLoader;
 import dalvik.system.PathClassLoader;
@@ -32,6 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBinding.oriBtn.setOnClickListener(this);
         mBinding.showFix.setOnClickListener(this);
 
+        System.out.println("ReflectionTest==");
+        Log.d("ReflectionTest", "main");
+        try {
+            OtherBean.class.getDeclaredMethod("testLog").invoke(OtherBean.class.newInstance());
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
         ClassLoader classLoader = getClassLoader();
         while (classLoader != null) {
             System.out.println("getClassLoader:" + classLoader);

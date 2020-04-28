@@ -1,21 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.zqg.hotfix"
+        applicationId "com.zqg.multi_thread"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    viewBinding {
-        enabled = true
     }
 
     buildTypes {
@@ -35,26 +31,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-}
-
-def patchPath = 'com/zqg/hotfixdemo/SaySuccess'
-
-task hotfix {
-    doLast {
-        exec {
-            commandLine 'rd', './build/patch'
-        }
-        exec {
-            commandLine 'mkdir', './build/patch'
-        }
-        exec {
-            commandLine 'javac', "./src/main/java/${patchPath}.java", '-d', './build/patch'
-        }
-        exec {
-            commandLine 'C:/Users/qiguang.zhu/AppData/Local/Android/Sdk/build-tools/29.0.2/d8', "./build/patch/${patchPath}.class", '--output', './build/patch'
-        }
-        exec {
-            commandLine 'mv', "./build/patch/classes.dex", './build/patch/hotfix.dex'
-        }
-    }
 }

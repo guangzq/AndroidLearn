@@ -9,6 +9,6 @@ package com.zqg.hotfixdemo;
  */
 public class SaySuccess {
     public String say() {
-        return "say orgi message";
+        return "say fix message";
     }
 }
