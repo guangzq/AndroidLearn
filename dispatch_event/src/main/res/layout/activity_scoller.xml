@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zqg.dispatch_event.ParentView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="10000dp">
+        <com.zqg.dispatch_event.ChildView
+            android:layout_width="match_parent"
+            android:text="test1"
+            android:layout_marginTop="100dp"
+            android:layout_height="50dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:text="test2"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50dp"
+            android:layout_height="50dp"/>
+    </RelativeLayout>
+</com.zqg.dispatch_event.ParentView>
