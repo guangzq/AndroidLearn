@@ -1,3 +1,4 @@
+include ':ipc_messager'
 include ':app', ':hotfix'
 rootProject.name='TestTDemo'
 include ':asm_test_demo'

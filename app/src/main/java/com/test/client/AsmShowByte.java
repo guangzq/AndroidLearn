@@ -1,4 +1,4 @@
-package com.test.testtdemo;
+package com.test.client;
 
 /**
  * <pre>
