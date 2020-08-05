@@ -1,3 +1,4 @@
+include ':ipc_aidl'
 include ':app:ipc_binder'
 include ':ipc_messager'
 include ':app', ':hotfix'

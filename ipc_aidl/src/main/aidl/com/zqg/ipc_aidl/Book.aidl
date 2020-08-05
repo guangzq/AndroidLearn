@@ -1,5 +1,5 @@
 // Book.aidl
-package com.test.server;
+package com.zqg.ipc_aidl;
 
 // Declare any non-default types here with import statements
 
