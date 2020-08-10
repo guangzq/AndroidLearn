@@ -8,37 +8,47 @@ package com.zqg.threadlibrary;
  *     desc  : TODO
  * </pre>
  */
-public class JoinThread {
+public class SynThread {
     public static void main(String[] args) throws InterruptedException {
         final Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (Counter.mLock) {
+                    for (int i=0;i<10000;i++) {
+                        Counter.longValue++;
+                        Counter.intValue++;
+                    }
                 }
-                System.out.println("thread1 running");
+
             }
         });
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    thread1.join(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (Counter.mLock) {
+                    for (int i=0;i<10000;i++) {
+                        Counter.longValue--;
+                        Counter.intValue--;
+                    }
                 }
-                System.out.println("thread2 running");
+
             }
         });
         System.out.println("start");
         thread1.start();
         thread2.start();
+//        thread1.join();
+//        thread2.join();
+        System.out.println("longValue=" + Counter.longValue + ",intValue=" + Counter.intValue);
         System.out.println("end");
     }
 
+    private synchronized void getValue() {
+
+    }
+
     static class Counter {
+        public final static Object mLock = new Object();
         public static long longValue = 0;
         public static int intValue = 0;
     }
