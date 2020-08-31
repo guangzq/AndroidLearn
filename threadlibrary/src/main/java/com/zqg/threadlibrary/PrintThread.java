@@ -18,7 +18,7 @@ class PrintThread {
         new Thread(new Run(), "2").start();
         new Thread(new Run(),  "3").start();
     }
-    
+
     private static class Run implements Runnable{
 
 
