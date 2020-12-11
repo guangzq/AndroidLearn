@@ -1,3 +1,6 @@
+include ':wifi'
+include ':handler'
+include ':ndk_jni'
 include ':okhttp_read2'
 include ':app:okhttp_read'
 include ':ipc_aidl'

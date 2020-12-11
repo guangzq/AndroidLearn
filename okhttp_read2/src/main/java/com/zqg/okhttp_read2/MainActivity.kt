@@ -2,9 +2,13 @@ package com.zqg.okhttp_read2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.ArrayMap
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
+import okhttp3.internal.cache.CacheInterceptor
+import okhttp3.internal.http.RetryAndFollowUpInterceptor
+import java.io.File
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +24,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getClient() : OkHttpClient {
+        return OkHttpClient.Builder().build()
+    }
+
     private fun request() {
-        val okHttpClient = OkHttpClient()
-        val builder = Request.Builder().url(URL).build()
+        val cache = Cache(File("test"), 2 * 1024 * 1024)
+        val okHttpClient = OkHttpClient.Builder()
+                //添加拦截器
+                .addInterceptor(LoggingInterceptor())
+//                .addInterceptor(CacheInterceptor(cache))
+//                .addInterceptor(RetryAndFollowUpInterceptor(getClient()))
+//                .eventListener(EventListener.NONE)
+                .build()
+
+        val builder = Request.Builder().url(URL)
+                .build()
         val newCall = okHttpClient.newCall(builder)
         if (newCall.isExecuted()) newCall.cancel()
         newCall.enqueue(object : Callback {
@@ -35,5 +52,16 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private inner class LoggingInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            Log.e(TAG, "请求前")
+            val request = chain.request()
+            val proceed = chain.proceed(request)
+            Log.e(TAG, "请求后" + proceed.headers.name(0))
+            return proceed
+        }
+
     }
 }
