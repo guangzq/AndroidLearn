@@ -1,3 +1,4 @@
+include ':third_party'
 include ':wifi'
 include ':handler'
 include ':ndk_jni'
