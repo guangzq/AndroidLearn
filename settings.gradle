@@ -1,3 +1,4 @@
+include ':leak'
 include ':third_party'
 include ':wifi'
 include ':handler'
