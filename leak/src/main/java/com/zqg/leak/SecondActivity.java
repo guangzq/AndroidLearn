@@ -14,6 +14,7 @@ import androidx.core.util.LruCacheKt;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ConcurrentHashMap;
 
 import leakcanary.AppWatcher;
 
@@ -26,7 +27,7 @@ import leakcanary.AppWatcher;
  * </pre>
  */
 public class SecondActivity extends AppCompatActivity {
-    private static final String TAG = "SecondActivity";
+    private static volatile String TAG = "SecondActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
