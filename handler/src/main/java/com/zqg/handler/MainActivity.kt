@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             when(msg.what) {
                 2->{
                     Log.d("MainActivity", msg.arg1.toString())
-
                 }
             }
         }

@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.os.SharedMemory
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.ArrayMap
@@ -27,24 +28,33 @@ import java.net.URLConnection
 class MainActivity : AppCompatActivity() {
     companion object {
         const val KEY = "key_service"
+        const val CREATE_NAME = "this is a Activity"
     }
 
     var onService: ServiceConnection = OnService()
 
+    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val intent = Intent(this, LearnService::class.java)
         btn.setOnClickListener {
-            Thread.currentThread().id
-            intent.putExtra(KEY, "this is a text")
-            bindService(intent, onService, BIND_AUTO_CREATE)
+//            Thread.currentThread().id
+//            intent.putExtra(KEY, "this is a text")
+//            bindService(intent, onService, BIND_AUTO_CREATE)
+            val str = "this is from a activity"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                val mapReadWrite = SharedMemoryUtil.create(str)
+                val mapReadWrite1 = mapReadWrite?.mapReadWrite()
+                mapReadWrite1?.put(str.toByteArray())
+                startActivity(Intent(this, SecondActivity::class.java))
+            }
         }
     }
 
     override fun onStop() {
         super.onStop()
-        unbindService(onService)
+//        unbindService(onService)
     }
 
     class OnService : ServiceConnection {
