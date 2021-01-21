@@ -23,6 +23,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.FileOutputStream
+import java.io.ObjectOutputStream
 import java.net.URLConnection
 
 class MainActivity : AppCompatActivity() {
@@ -37,18 +39,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val intent = Intent(this, LearnService::class.java)
         btn.setOnClickListener {
 //            Thread.currentThread().id
 //            intent.putExtra(KEY, "this is a text")
 //            bindService(intent, onService, BIND_AUTO_CREATE)
             val str = "this is from a activity"
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                val mapReadWrite = SharedMemoryUtil.create(str)
-                val mapReadWrite1 = mapReadWrite?.mapReadWrite()
-                mapReadWrite1?.put(str.toByteArray())
-                startActivity(Intent(this, SecondActivity::class.java))
+//                val mapReadWrite = SharedMemoryUtil.create(str)
+//                val mapReadWrite1 = mapReadWrite?.mapReadWrite()
+//                mapReadWrite1?.put(str.toByteArray())
+                val intent = Intent(this, SecondActivity::class.java)
+                intent.putExtra(KEY, DataBean())
+                startActivity(intent)
             }
+        }
+        saveBtn.setOnClickListener {
+            val fileOutputStream = FileOutputStream("C:\\projects/AndroidLearn/README.md")
+            val objectOutputStream = ObjectOutputStream(fileOutputStream)
+            val dataBean = DataBean()
+            dataBean.index = 66668888
+            objectOutputStream.writeObject(dataBean)
+            objectOutputStream.flush()
+            objectOutputStream.close()
         }
     }
 
