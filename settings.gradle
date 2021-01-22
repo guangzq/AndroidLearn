@@ -1,3 +1,4 @@
+include ':sohotfix'
 include ':leak'
 include ':third_party'
 include ':wifi'
